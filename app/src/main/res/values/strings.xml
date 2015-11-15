@@ -8,4 +8,5 @@
         <item>popularity</item>
         <item>rating</item>
     </string-array>
+    <string name="title_activity_guess">GuessActivity</string>
 </resources>

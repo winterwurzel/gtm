@@ -2,8 +2,8 @@ package at.android.gm.guessthemovie;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.provider.ContactsContract;
 import android.util.Log;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,15 +14,31 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by georg on 15-Nov-15.
  */
-public class DataHandler {
+public class DataHandler implements OnFetchDataCompleted{
+    @Override
+    public void OnFetchDataCompleted() {
+        nextPageReady = true;
+    }
+
     private static DataHandler ourInstance = new DataHandler();
 
-    private JSONObject data;
+    private JSONArray results;
+    private List movieArray;
     private ProgressDialog dialog;
+    private String dataUrl = "http://api.themoviedb.org/3/discover/movie?api_key=d395777e95507dd42bcaab7bb4f94266";
+    private String backdropBaseUrl = "https://image.tmdb.org/t/p/original";
+    private int page = 1;
+    private boolean nextPageReady = true;
+
+    public DataHandler() {
+        movieArray = new ArrayList();
+    }
 
     public static DataHandler getInstance() {
         return ourInstance;
@@ -67,18 +83,34 @@ public class DataHandler {
 
         protected void onPostExecute(JSONObject json) {
             DataHandler.getInstance().dismissDialog();
-            DataHandler.getInstance().setData(json);
+            try {
+                results = json.getJSONArray("results");
+                for (int i=0; i < results.length(); i++) {
+                    JSONObject mv = results.getJSONObject(i);
+                    movieArray.add(new Movie(mv.getBoolean("adult"), mv.getString("backdrop_path"), mv.getString("genre_ids"), mv.getInt("id"), mv.getString("original_language"),
+                            mv.getString("original_title"), mv.getString("overview"), mv.getString("release_date"), mv.getString("poster_path"), mv.getDouble("popularity"),
+                            mv.getString("title"), mv.getDouble("vote_average")));
+                }
+            } catch (JSONException e) {
+                Log.e("JSON", "Error getting data.");
+            }
             listener.OnFetchDataCompleted();
         }
     }
 
-    public void setData(JSONObject data) {
-        this.data = data;
-        Log.e("data", data.toString());
-    }
-
-    public JSONObject getData() {
-        return data;
+    public String getNextBackdropUrl() {
+        if (nextPageReady) {
+            Movie nextMovie = (Movie) this.movieArray.get(0);
+            movieArray.remove(0);
+            Log.e("length", "" + movieArray.size());
+            if (movieArray.isEmpty() == true) {
+                page++;
+                getData(this);
+                nextPageReady = false;
+            }
+            return backdropBaseUrl + nextMovie.getBackdrop_path();
+        } else
+            return null;
     }
 
     public void setDialogMessage(String msg) {
@@ -98,8 +130,8 @@ public class DataHandler {
         this.dialog = dialog;
     }
 
-    public void getData(String url, OnFetchDataCompleted ofdc){
-        new FetchDataTask(ofdc).execute(url);
+    public void getData(OnFetchDataCompleted ofdc){
+        new FetchDataTask(ofdc).execute(dataUrl + "&page=" + page);
     }
 
 }

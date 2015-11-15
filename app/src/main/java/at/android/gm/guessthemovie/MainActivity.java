@@ -51,12 +51,14 @@ public class MainActivity extends AppCompatActivity implements OnFetchDataComple
         DataHandler dh = DataHandler.getInstance();
         ProgressDialog dialog = new ProgressDialog(this);
         dh.setDialog(dialog);
-        dh.getData("http://api.themoviedb.org/3/discover/movie?api_key=d395777e95507dd42bcaab7bb4f94266", this);
+        dh.getData(this);
 
     }
 
     @Override
     public void OnFetchDataCompleted() {
         Log.e("test", "FERTIG!");
+        Intent i = new Intent(this, GuessActivity.class);
+        startActivity(i);
     }
 }
