@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Guess the Movie</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+    <string-array name="pref_result_order">
+        <item>popularity</item>
+        <item>rating</item>
+    </string-array>
+</resources>

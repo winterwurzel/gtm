@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory>
+        <ListPreference android:key="list_preference"
+            android:title="Get results by"
+            android:summary="Use a list dialog"
+            android:entries="@array/pref_result_order"
+            android:entryValues="@array/pref_result_order"
+            android:dialogTitle="Get results by" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
