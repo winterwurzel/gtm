@@ -16,7 +16,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/imageView"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:contentDescription="@string/contentDescription" />
 
     <ProgressBar
         android:visibility="invisible"
@@ -29,10 +30,32 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="next"
+        android:text="@string/button2"
         android:onClick="nextButtonClicked"
         android:id="@+id/button2"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+
+    <GridView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:columnWidth="50dp"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="1dp"
+        android:horizontalSpacing="1dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
+        android:id="@+id/buttonLayout"
+        android:layout_below="@+id/imageView"
+        android:textAlignment="center" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/textView2"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="71dp" />
+        android:layout_below="@+id/buttonLayout"/>
+
 </RelativeLayout>

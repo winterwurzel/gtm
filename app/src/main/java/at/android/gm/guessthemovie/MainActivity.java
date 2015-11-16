@@ -2,7 +2,9 @@ package at.android.gm.guessthemovie;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -48,10 +50,18 @@ public class MainActivity extends AppCompatActivity implements OnFetchDataComple
     }
 
     public void startButtonClicked(View view) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String order = sharedPref.getString("list_preference", "");
+        String options = null;
+        if (order.equals("popularity"))
+            options = "&sort_by=popularity.desc";
+        else if (order.equals("rating"))
+            options = "&sort_by=vote_average.desc&vote_count.gte=100";
+
         DataHandler dh = DataHandler.getInstance();
         ProgressDialog dialog = new ProgressDialog(this);
         dh.setDialog(dialog);
-        dh.getData(this);
+        dh.getData(this, options);
 
     }
 

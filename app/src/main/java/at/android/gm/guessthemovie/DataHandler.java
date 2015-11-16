@@ -87,7 +87,8 @@ public class DataHandler implements OnFetchDataCompleted{
                 results = json.getJSONArray("results");
                 for (int i=0; i < results.length(); i++) {
                     JSONObject mv = results.getJSONObject(i);
-                    movieArray.add(new Movie(mv.getBoolean("adult"), mv.getString("backdrop_path"), mv.getString("genre_ids"), mv.getInt("id"), mv.getString("original_language"),
+                    if (mv.getString("backdrop_path") != null)
+                        movieArray.add(new Movie(mv.getBoolean("adult"), mv.getString("backdrop_path"), mv.getString("genre_ids"), mv.getInt("id"), mv.getString("original_language"),
                             mv.getString("original_title"), mv.getString("overview"), mv.getString("release_date"), mv.getString("poster_path"), mv.getDouble("popularity"),
                             mv.getString("title"), mv.getDouble("vote_average")));
                 }
@@ -101,16 +102,23 @@ public class DataHandler implements OnFetchDataCompleted{
     public String getNextBackdropUrl() {
         if (nextPageReady) {
             Movie nextMovie = (Movie) this.movieArray.get(0);
-            movieArray.remove(0);
-            Log.e("length", "" + movieArray.size());
-            if (movieArray.isEmpty() == true) {
-                page++;
-                getData(this);
-                nextPageReady = false;
-            }
             return backdropBaseUrl + nextMovie.getBackdrop_path();
         } else
             return null;
+    }
+
+    public void removeCurrentMovie() {
+        movieArray.remove(0);
+        Log.e("length", "" + movieArray.size());
+        if (movieArray.isEmpty() == true) {
+            page++;
+            getData(this, null);
+            nextPageReady = false;
+        }
+    }
+
+    public Movie getCurrentMovie() {
+        return (Movie) movieArray.get(0);
     }
 
     public void setDialogMessage(String msg) {
@@ -130,8 +138,8 @@ public class DataHandler implements OnFetchDataCompleted{
         this.dialog = dialog;
     }
 
-    public void getData(OnFetchDataCompleted ofdc){
-        new FetchDataTask(ofdc).execute(dataUrl + "&page=" + page);
+    public void getData(OnFetchDataCompleted ofdc, String options){
+        new FetchDataTask(ofdc).execute(dataUrl + "&page=" + page + options);
     }
 
 }

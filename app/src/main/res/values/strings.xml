@@ -5,8 +5,11 @@
 
     <!-- Strings related to Settings -->
     <string-array name="pref_result_order">
+        <item>default</item>
         <item>popularity</item>
         <item>rating</item>
     </string-array>
     <string name="title_activity_guess">GuessActivity</string>
+    <string name="button2">next</string>
+    <string name="contentDescription">backdrop_image</string>
 </resources>
