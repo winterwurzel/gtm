@@ -19,6 +19,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.InputStream;
@@ -33,6 +34,7 @@ public class GuessActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private DownloadImageTask task;
     private GridView gridview;
+    private TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class GuessActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        textView = (TextView) findViewById(R.id.textView2);
         gridview = (GridView) findViewById(R.id.buttonLayout);
 
         imageView = (ImageView)findViewById(R.id.imageView);
@@ -58,7 +61,7 @@ public class GuessActivity extends AppCompatActivity {
 
         Log.e("test", rndmTitle + ", " + rndmTitle.length() + ", " + movie.getTitle());
 
-        gridview.setAdapter(new ButtonAdapter(this, rndmTitle));
+        gridview.setAdapter(new ButtonAdapter(this, rndmTitle, textView));
 
     }
 
@@ -127,5 +130,7 @@ public class GuessActivity extends AppCompatActivity {
 
         return output.toString();
     }
+
+
 
 }

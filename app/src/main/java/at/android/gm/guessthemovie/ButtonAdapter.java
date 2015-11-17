@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -15,10 +16,12 @@ import android.widget.Toast;
 public class ButtonAdapter extends BaseAdapter {
     private Context mContext;
     private String rndmTitle;
+    private TextView textView;
 
-    public ButtonAdapter(Context c, String rndmTitle) {
+    public ButtonAdapter(Context c, String rndmTitle, TextView textView) {
         mContext = c;
         this.rndmTitle = rndmTitle;
+        this.textView = textView;
     }
 
     @Override
@@ -57,6 +60,12 @@ public class ButtonAdapter extends BaseAdapter {
                 Toast.makeText(v.getContext(),
                         "Button clicked index = " + myButton.getId(), Toast.LENGTH_SHORT)
                         .show();
+
+                if (textView.getText().equals("tap letters in the correct order"))
+                    textView.setText(myButton.getText());
+                else
+                    textView.setText((String) textView.getText() + myButton.getText());
+
             }
         });
 

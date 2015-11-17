@@ -12,4 +12,5 @@
     <string name="title_activity_guess">GuessActivity</string>
     <string name="button2">next</string>
     <string name="contentDescription">backdrop_image</string>
+    <string name="defaultText">tap letters in the correct order</string>
 </resources>

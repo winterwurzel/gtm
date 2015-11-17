@@ -117,6 +117,14 @@ public class DataHandler implements OnFetchDataCompleted{
         }
     }
 
+    public boolean checkGuessedMovie(String textViewString) {
+        String movieTitle = this.getCurrentMovie().getTitle();
+        if (movieTitle.equals(textViewString))
+            return true;
+        else
+            return false;
+    }
+
     public Movie getCurrentMovie() {
         return (Movie) movieArray.get(0);
     }
