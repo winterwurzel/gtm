@@ -2,12 +2,19 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory>
-        <ListPreference android:key="list_preference"
+        <ListPreference android:key="list_preference_order"
             android:title="Get results by"
             android:summary="Use a list dialog"
             android:entries="@array/pref_result_order"
             android:entryValues="@array/pref_result_order"
             android:dialogTitle="Get results by" />
+
+        <ListPreference android:key="list_preference_genres"
+            android:title="Genre"
+            android:summary="Use a list dialog"
+            android:entries="@array/pref_genres"
+            android:entryValues="@array/pref_genres"
+            android:dialogTitle="Genre" />
 
     </PreferenceCategory>
 

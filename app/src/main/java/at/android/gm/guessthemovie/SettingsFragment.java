@@ -12,8 +12,8 @@ import android.util.Log;
  * Created by georg on 15-Nov-15.
  */
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
-    private final String KEY_PREF_EDITTEXT= "edittext_preference";
-    private final String KEY_PREF_LIST= "list_preference";
+    private final String KEY_PREF_LIST_ORDER= "list_preference_order";
+    private final String KEY_PREF_LIST_GENRES= "list_preference_genres";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,8 +29,10 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         SharedPreferences sharedPreferences = getPreferenceManager().getSharedPreferences();
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
         // show previously stored values
-        Preference listPref = findPreference(KEY_PREF_LIST);
-        listPref.setSummary(sharedPreferences.getString(KEY_PREF_LIST, ""));
+        Preference listPrefOrder = findPreference(KEY_PREF_LIST_ORDER);
+        listPrefOrder.setSummary(sharedPreferences.getString(KEY_PREF_LIST_ORDER, ""));
+        Preference listPrefGenre = findPreference(KEY_PREF_LIST_GENRES);
+        listPrefGenre.setSummary(sharedPreferences.getString(KEY_PREF_LIST_GENRES, ""));
     }
 
     @Override
@@ -51,14 +53,12 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPref, String key) {
         Log.d(">>APPLICATION SETTINGS", "key=" + key);
-        // Edit Text
-        if (key.equals(KEY_PREF_EDITTEXT)) {
-            Preference editTextPref = findPreference(key);
-            editTextPref.setSummary(sharedPref.getString(key, ""));
-            // list value
-        } else if (key.equals(KEY_PREF_LIST)) {
-            Preference listPref = findPreference(key);
-            listPref.setSummary(sharedPref.getString(key, ""));
+        if (key.equals(KEY_PREF_LIST_ORDER)) {
+            Preference listPrefOrder = findPreference(key);
+            listPrefOrder.setSummary(sharedPref.getString(key, ""));
+        } else if (key.equals(KEY_PREF_LIST_GENRES)) {
+            Preference listPrefGenres = findPreference(key);
+            listPrefGenres.setSummary(sharedPref.getString(key, ""));
         }
 
     }

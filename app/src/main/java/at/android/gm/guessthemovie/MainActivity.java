@@ -15,9 +15,40 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
+import java.util.Collections;
+import java.util.Dictionary;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity implements OnFetchDataCompleted{
 
     private final int SHOW_PREFERENCES = 0;
+
+    static final Map<String, Integer> CONSTANT_MAP;
+    static {
+        Map<String, Integer> tmp = new LinkedHashMap<String, Integer>();
+        tmp.put("Action", 28);
+        tmp.put("Adventure", 12);
+        tmp.put("Animation", 16);
+        tmp.put("Comedy", 35);
+        tmp.put("Crime", 80);
+        tmp.put("Documentary", 99);
+        tmp.put("Drama", 18);
+        tmp.put("Family", 10751);
+        tmp.put("Fantasy", 14);
+        tmp.put("Foreign", 10769);
+        tmp.put("History", 36);
+        tmp.put("Horror", 27);
+        tmp.put("Music", 10402);
+        tmp.put("Mystery", 9648);
+        tmp.put("Romance", 10749);
+        tmp.put("Science Fiction", 878);
+        tmp.put("TV Movie", 10770);
+        tmp.put("Thriller", 53);
+        tmp.put("War", 10752);
+        tmp.put("Western", 37);
+        CONSTANT_MAP = Collections.unmodifiableMap(tmp);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,12 +88,16 @@ public class MainActivity extends AppCompatActivity implements OnFetchDataComple
 
     public void startButtonClicked(View view) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        String order = sharedPref.getString("list_preference", "");
-        String options = null;
-        if (order.equals("popularity"))
+        String order = sharedPref.getString("list_preference_order", "");
+        String options = "";
+        if (order.equals("Popularity"))
             options = "&sort_by=popularity.desc";
-        else if (order.equals("rating"))
-            options = "&sort_by=vote_average.desc&vote_count.gte=100";
+        else if (order.equals("Rating"))
+            options = "&sort_by=vote_average.desc&vote_count.gte=1000";
+
+        String genre = sharedPref.getString("list_preference_genres", "");
+        if (!genre.equals("Default"))
+            options += "&with_genres=" + CONSTANT_MAP.get(genre);
 
         DataHandler dh = DataHandler.getInstance();
         ProgressDialog dialog = new ProgressDialog(this);
@@ -80,7 +115,6 @@ public class MainActivity extends AppCompatActivity implements OnFetchDataComple
 
     @Override
     public void OnFetchDataCompleted() {
-        Log.e("test", "FERTIG!");
         Intent i = new Intent(this, GuessActivity.class);
         startActivity(i);
     }

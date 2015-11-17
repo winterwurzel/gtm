@@ -1,12 +1,15 @@
 package at.android.gm.guessthemovie;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by georg on 15-Nov-15.
  */
 public class Movie {
     private boolean adult;
     private String backdrop_path;
-    private String genre_ids;
+    private List<Integer> genre_ids;
     private int id;
     private String original_language;
     private String original_title;
@@ -17,7 +20,7 @@ public class Movie {
     private String title;
     private double vote_average;
 
-    public Movie(boolean adult, String backdrop_path, String genre_ids, int id, String original_language, String original_title, String overview, String release_Date, String poster_path, double popularity, String title, double vote_average) {
+    public Movie(boolean adult, String backdrop_path, List<Integer> genre_ids, int id, String original_language, String original_title, String overview, String release_Date, String poster_path, double popularity, String title, double vote_average) {
         this.adult = adult;
         this.backdrop_path = backdrop_path;
         this.genre_ids = genre_ids;
@@ -40,7 +43,7 @@ public class Movie {
         return backdrop_path;
     }
 
-    public String getGenre_ids() {
+    public List<Integer> getGenre_ids() {
         return genre_ids;
     }
 
