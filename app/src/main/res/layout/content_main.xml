@@ -41,8 +41,17 @@
             android:layout_height="wrap_content"
             android:text="Start"
             android:onClick="startButtonClicked"
-            android:id="@+id/button"
+            android:id="@+id/buttonStart"
             android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Resume"
+            android:onClick="resumeButtonClicked"
+            android:id="@+id/buttonResume"
+            android:layout_gravity="center_horizontal"
+            android:visibility="invisible" />
 
         <Space
             android:layout_width="match_parent"

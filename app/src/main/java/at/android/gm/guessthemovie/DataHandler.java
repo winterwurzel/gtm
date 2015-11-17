@@ -35,6 +35,7 @@ public class DataHandler implements OnFetchDataCompleted{
     private String backdropBaseUrl = "https://image.tmdb.org/t/p/original";
     private int page = 1;
     private boolean nextPageReady = true;
+    private int lives = 3;
 
     public DataHandler() {
         movieArray = new ArrayList();
@@ -109,7 +110,6 @@ public class DataHandler implements OnFetchDataCompleted{
 
     public void removeCurrentMovie() {
         movieArray.remove(0);
-        Log.e("length", "" + movieArray.size());
         if (movieArray.isEmpty() == true) {
             page++;
             getData(this, null);
@@ -144,6 +144,21 @@ public class DataHandler implements OnFetchDataCompleted{
 
     public void setDialog(ProgressDialog dialog) {
         this.dialog = dialog;
+    }
+
+    public void reInitMovieArray() {
+        this.movieArray = new ArrayList();
+        page = 1;
+        nextPageReady = true;
+        lives = 3;
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
+    public void reduceLives() {
+        lives--;
     }
 
     public void getData(OnFetchDataCompleted ofdc, String options){

@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity implements OnFetchDataCompleted{
 
@@ -24,6 +25,11 @@ public class MainActivity extends AppCompatActivity implements OnFetchDataComple
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        if (DataHandler.getInstance().getLives() == 0) {
+            Button resumeButton = (Button) findViewById(R.id.buttonResume);
+            resumeButton.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -61,8 +67,15 @@ public class MainActivity extends AppCompatActivity implements OnFetchDataComple
         DataHandler dh = DataHandler.getInstance();
         ProgressDialog dialog = new ProgressDialog(this);
         dh.setDialog(dialog);
+        dh.reInitMovieArray();
         dh.getData(this, options);
+        Button resumeButton = (Button) findViewById(R.id.buttonResume);
+        resumeButton.setVisibility(View.VISIBLE);
+    }
 
+    public void resumeButtonClicked(View view) {
+        Intent i = new Intent(this, GuessActivity.class);
+        startActivity(i);
     }
 
     @Override
