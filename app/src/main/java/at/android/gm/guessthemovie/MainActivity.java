@@ -82,6 +82,10 @@ public class MainActivity extends AppCompatActivity implements OnFetchDataComple
                 Intent i = new Intent(this, SettingsActivity.class);
                 startActivityForResult(i, SHOW_PREFERENCES);
                 return true;
+            case R.id.action_about:
+                Intent i2 = new Intent(this, AboutActivity.class);
+                startActivity(i2);
+                return true;
         }
         return false;
     }

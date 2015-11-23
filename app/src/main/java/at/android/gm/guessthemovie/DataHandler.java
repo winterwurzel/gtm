@@ -34,10 +34,11 @@ public class DataHandler implements OnFetchDataCompleted{
     private List<Movie> movieArray;
     private ProgressDialog dialog;
     private String dataUrl = "http://api.themoviedb.org/3/discover/movie?api_key=d395777e95507dd42bcaab7bb4f94266";
-    private String backdropBaseUrl = "https://image.tmdb.org/t/p/original";
+    private String backdropBaseUrl = "https://image.tmdb.org/t/p/w780";
     private int page = 1;
     private boolean nextPageReady = true;
     private int lives = 3;
+    private int count = 1;
 
     public DataHandler() {
         movieArray = new ArrayList();
@@ -120,6 +121,7 @@ public class DataHandler implements OnFetchDataCompleted{
     }
 
     public void removeCurrentMovie() {
+        count++;
         movieArray.remove(0);
         if (movieArray.isEmpty() == true) {
             page++;
@@ -137,6 +139,7 @@ public class DataHandler implements OnFetchDataCompleted{
     }
 
     public Movie getCurrentMovie() {
+        Log.e("log", "array-size: "  + movieArray.size());
         return (Movie) movieArray.get(0);
     }
 
@@ -162,6 +165,11 @@ public class DataHandler implements OnFetchDataCompleted{
         page = 1;
         nextPageReady = true;
         lives = 3;
+        count = 1;
+    }
+
+    public int getCount() {
+        return count;
     }
 
     public int getLives() {

@@ -1,31 +1,24 @@
 package at.android.gm.guessthemovie;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -35,7 +28,7 @@ import java.util.List;
 public class GuessActivity extends AppCompatActivity {
 
     private ImageView imageView;
-    private Bitmap bitmap;
+    //private Bitmap bitmap;
     private ProgressBar progressBar;
     private DownloadImageTask task;
     private GridView gridview;
@@ -45,10 +38,10 @@ public class GuessActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guess);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         textView = (TextView) findViewById(R.id.textView2);
         gridview = (GridView) findViewById(R.id.buttonLayout);
@@ -63,6 +56,15 @@ public class GuessActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(this,MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(intent);
+        finish();
+    }
+
     private void initButtons() {
         Movie movie = DataHandler.getInstance().getCurrentMovie();
         String rndmTitle = shuffle(movie.getTitle());
@@ -74,10 +76,18 @@ public class GuessActivity extends AppCompatActivity {
         updateGame(this);
     }
 
-    private void loadNext() {
+    private void loadNext(boolean correctAnswer) {
+        Movie movie = DataHandler.getInstance().getCurrentMovie();
+        Intent i = new Intent(this, MovieInfoActivity.class);
+        //i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        i.putExtra("movie", movie);
+        i.putExtra("correct", correctAnswer);
         DataHandler.getInstance().removeCurrentMovie();
-        bitmap.recycle();
-        showImage();
+        //showImage();
+        imageView.setVisibility(View.INVISIBLE);
+        ((BitmapDrawable)imageView.getDrawable()).getBitmap().recycle();
+        startActivity(i);
+        finish();
     }
 
     public void showImage() {
@@ -91,7 +101,6 @@ public class GuessActivity extends AppCompatActivity {
     }
 
     private class DownloadImageTask extends AsyncTask<String,Void,Bitmap> {
-
         // this is done in UI thread, nothing this time
         @Override
         protected void onPreExecute() {
@@ -103,7 +112,7 @@ public class GuessActivity extends AppCompatActivity {
         @Override
         protected Bitmap doInBackground(String... urls) {
             URL imageUrl;
-            bitmap = null;
+            Bitmap bitmap = null;
             try {
                 imageUrl = new URL(urls[0]);
                 InputStream in = imageUrl.openStream();
@@ -192,11 +201,11 @@ public class GuessActivity extends AppCompatActivity {
                         textView.setText((String) textView.getText() + myButton.getText());
 
                     if (DataHandler.getInstance().checkGuessedMovie((String) textView.getText())) {
-                        textView.setText("nice guess!");
+                        //textView.setText("nice guess!");
                         gridview.setVisibility(View.INVISIBLE);
-                        loadNext();
+                        loadNext(true);
                     } else if (textView.getText().length() > rndmTitle.length()) {
-                        textView.setText("nope, maybe next time!");
+                        //textView.setText("nope, maybe next time!");
                         updateGame(mContext);
                     }
                 }
@@ -227,8 +236,9 @@ public class GuessActivity extends AppCompatActivity {
         gridview.setVisibility(View.INVISIBLE);
         if (DataHandler.getInstance().getLives() > 1) {
             DataHandler.getInstance().reduceLives();
-            loadNext();
+            loadNext(false);
         } else {
+            /*
             AlertDialog alertDialog = new AlertDialog.Builder(mContext).create();
             alertDialog.setTitle("Game Over!");
             alertDialog.setMessage("You lost all of your lives and therefor the game!");
@@ -240,8 +250,11 @@ public class GuessActivity extends AppCompatActivity {
                             startActivity(i);
                         }
                     });
-            alertDialog.show();
+            alertDialog.show();*/
+            Intent intent = new Intent(this,GameOverActivity.class);
+            startActivity(intent);
+            finish();
         }
-        updateHearts(mContext);
+        //updateHearts(mContext);
     }
 }

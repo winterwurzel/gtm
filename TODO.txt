@@ -1,0 +1,6 @@
+
+- About-activity with some version and author info
+- explanation about lives somewhere
+- a activity with information abot the movie after right or wrong guess/skip (like in the planning doc)
+- more settings
+- GUI cleanup, more consistent look

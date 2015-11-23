@@ -1,12 +1,13 @@
 package at.android.gm.guessthemovie;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by georg on 15-Nov-15.
  */
-public class Movie {
+public class Movie implements Serializable{
     private boolean adult;
     private String backdrop_path;
     private List<Integer> genre_ids;
