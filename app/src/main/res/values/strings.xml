@@ -34,7 +34,7 @@
         <item>Western</item>
     </string-array>
     <string name="title_activity_guess">GuessActivity</string>
-    <string name="button2">next</string>
+    <string name="button2">skip</string>
     <string name="nextButton">next</string>
     <string name="infoButton">more Info</string>
     <string name="contentDescription">backdrop_image</string>
@@ -43,4 +43,7 @@
     <string name="title_activity_wrong_guess">WrongGuessActivity</string>
     <string name="title_activity_about">AboutActivity</string>
     <string name="title_activity_game_over">GameOverActivity</string>
+    <string name="newGameButton">new game</string>
+    <string name="mainMenuButton">main menu</string>
+    <string name="resetButton">reset</string>
 </resources>

@@ -11,28 +11,68 @@
     tools:context="at.android.gm.guessthemovie.GameOverActivity">
 
     <LinearLayout
+        android:id="@+id/goLayout"
         android:orientation="vertical"
         android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:weightSum="1">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Game Over!" />
+            android:text="Game Over!"
+            android:textStyle="bold"
+            android:textSize="48dp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.20" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="You lost all your lives!" />
+            android:text="You lost all your lives!"
+            android:textSize="30dp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="def"
-            android:id="@+id/gameOverText"/>
+            android:id="@+id/gameOverText"
+            android:textSize="30dp"/>
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.8" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|bottom">
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/mainMenuButton"
+                android:onClick="menuButtonClicked"
+                android:id="@+id/menuButton" />
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/newGameButton"
+                android:onClick="newGameButtonClicked"
+                android:id="@+id/newGameButton" />
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>

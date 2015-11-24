@@ -2,7 +2,6 @@ package at.android.gm.guessthemovie;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.provider.ContactsContract;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -38,7 +37,7 @@ public class DataHandler implements OnFetchDataCompleted{
     private int page = 1;
     private boolean nextPageReady = true;
     private int lives = 3;
-    private int count = 1;
+    private int count = 0;
 
     public DataHandler() {
         movieArray = new ArrayList();
@@ -165,7 +164,7 @@ public class DataHandler implements OnFetchDataCompleted{
         page = 1;
         nextPageReady = true;
         lives = 3;
-        count = 1;
+        count = 0;
     }
 
     public int getCount() {

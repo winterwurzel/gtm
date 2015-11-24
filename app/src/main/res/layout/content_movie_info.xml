@@ -18,17 +18,29 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true" />
 
+
+
     <LinearLayout
-        android:orientation="vertical"
-        android:gravity="top"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/wrongtText"
+            android:layout_gravity="center"
+            android:layout_marginBottom="3dp"
+            android:textSize="28dp"
+            android:id="@+id/correctTV"/>
 
         <LinearLayout
             android:orientation="horizontal"
             android:gravity="center"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/infoLayout">
             <ImageView
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
@@ -41,54 +53,70 @@
                 android:gravity="left"
                 android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@string/wrongtText"
-                    android:id="@+id/correctTV" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Correct Title:"/>
+                    android:text="default"
+                    android:layout_gravity="right"
+                    android:gravity="right"
+                    android:id="@+id/correctTitle"
+                    android:textAlignment="gravity" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="default"
-                    android:id="@+id/correctTitle"/>
-                </LinearLayout>
+                    android:layout_gravity="right"
+                    android:id="@+id/rating"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="default"
+                    android:layout_gravity="right"
+                    android:id="@+id/release"/>
+            </LinearLayout>
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp">
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="string/lorem"
+                android:id="@+id/storyTV"/>
+        </ScrollView>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="default"
-            android:id="@+id/storyTV"/>
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:gravity="center_horizontal"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/nextButton"
-            android:onClick="nextButtonClicked"
-            android:id="@+id/nextButton" />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/infoButton"
-            android:onClick="infoButtonClicked"
-            android:id="@+id/infoButton" />
+            android:gravity="center|bottom">
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/nextButton"
+                android:onClick="nextButtonClicked"
+                android:id="@+id/nextButton" />
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/infoButton"
+                android:onClick="infoButtonClicked"
+                android:id="@+id/infoButton" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </RelativeLayout>

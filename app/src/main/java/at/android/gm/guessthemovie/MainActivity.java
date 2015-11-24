@@ -24,32 +24,6 @@ public class MainActivity extends AppCompatActivity implements OnFetchDataComple
 
     private final int SHOW_PREFERENCES = 0;
 
-    static final Map<String, Integer> CONSTANT_MAP;
-    static {
-        Map<String, Integer> tmp = new LinkedHashMap<String, Integer>();
-        tmp.put("Action", 28);
-        tmp.put("Adventure", 12);
-        tmp.put("Animation", 16);
-        tmp.put("Comedy", 35);
-        tmp.put("Crime", 80);
-        tmp.put("Documentary", 99);
-        tmp.put("Drama", 18);
-        tmp.put("Family", 10751);
-        tmp.put("Fantasy", 14);
-        tmp.put("Foreign", 10769);
-        tmp.put("History", 36);
-        tmp.put("Horror", 27);
-        tmp.put("Music", 10402);
-        tmp.put("Mystery", 9648);
-        tmp.put("Romance", 10749);
-        tmp.put("Science Fiction", 878);
-        tmp.put("TV Movie", 10770);
-        tmp.put("Thriller", 53);
-        tmp.put("War", 10752);
-        tmp.put("Western", 37);
-        CONSTANT_MAP = Collections.unmodifiableMap(tmp);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,15 +75,13 @@ public class MainActivity extends AppCompatActivity implements OnFetchDataComple
 
         String genre = sharedPref.getString("list_preference_genres", "");
         if (!genre.equals("Default"))
-            options += "&with_genres=" + CONSTANT_MAP.get(genre);
+            options += "&with_genres=" + GenreMap.getInstance().getCONSTANT_MAP().get(genre);
 
         DataHandler dh = DataHandler.getInstance();
         ProgressDialog dialog = new ProgressDialog(this);
         dh.setDialog(dialog);
         dh.reInitMovieArray();
         dh.getData(this, options);
-        Button resumeButton = (Button) findViewById(R.id.buttonResume);
-        resumeButton.setVisibility(View.VISIBLE);
     }
 
     public void resumeButtonClicked(View view) {
@@ -121,5 +93,7 @@ public class MainActivity extends AppCompatActivity implements OnFetchDataComple
     public void OnFetchDataCompleted() {
         Intent i = new Intent(this, GuessActivity.class);
         startActivity(i);
+        Button resumeButton = (Button) findViewById(R.id.buttonResume);
+        resumeButton.setVisibility(View.VISIBLE);
     }
 }

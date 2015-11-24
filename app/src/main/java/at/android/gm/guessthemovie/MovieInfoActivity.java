@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.io.InputStream;
 import java.net.URL;
 
@@ -25,7 +27,10 @@ public class MovieInfoActivity extends AppCompatActivity {
     private DownloadImageTask task;
     private TextView textView;
     private TextView storyTV;
+    private TextView ratingTV;
+    private TextView releaseTV;
     private Movie movie;
+    private boolean gameOver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,16 +45,22 @@ public class MovieInfoActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         textView = (TextView) findViewById(R.id.correctTitle);
         storyTV = (TextView) findViewById(R.id.storyTV);
+        ratingTV = (TextView) findViewById(R.id.rating);
+        releaseTV = (TextView) findViewById(R.id.release);
 
         Intent i = getIntent();
         movie = (Movie) i.getSerializableExtra("movie");
         boolean correctAnswer = i.getBooleanExtra("correct", false);
+        gameOver = i.getBooleanExtra("gameOver", false);
         TextView correctTV = (TextView) findViewById(R.id.correctTV);
+
+        ratingTV.setText("rating: " + movie.getVote_average() + "/10");
+        releaseTV.setText("(" + movie.getRelease_Date().split("-")[0] + ")");
 
         if (correctAnswer)
             correctTV.setText("Correct!");
         else
-            correctTV.setText("Wrong!");
+            correctTV.setText("Wrong! - You lost 1 live!");
 
         textView.setText(movie.getTitle());
         storyTV.setText(movie.getOverview());
@@ -66,11 +77,17 @@ public class MovieInfoActivity extends AppCompatActivity {
     }
 
     public void nextButtonClicked(View view) {
-        Intent i = new Intent(this, GuessActivity.class);
         imageView.setVisibility(View.INVISIBLE);
-        ((BitmapDrawable)imageView.getDrawable()).getBitmap().recycle();
-        startActivity(i);
-        finish();
+        ((BitmapDrawable) imageView.getDrawable()).getBitmap().recycle();
+        if (gameOver) {
+            Intent intent = new Intent(this,GameOverActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            Intent i = new Intent(this, GuessActivity.class);
+            startActivity(i);
+            finish();
+        }
     }
 
     public void infoButtonClicked(View view) {

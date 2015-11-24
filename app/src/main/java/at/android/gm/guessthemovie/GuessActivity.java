@@ -1,6 +1,5 @@
 package at.android.gm.guessthemovie;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -33,6 +33,7 @@ public class GuessActivity extends AppCompatActivity {
     private DownloadImageTask task;
     private GridView gridview;
     private TextView textView;
+    private TextView guessTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,7 @@ public class GuessActivity extends AppCompatActivity {
 
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        textView = (TextView) findViewById(R.id.textView2);
+        textView = (TextView) findViewById(R.id.guessTextView);
         gridview = (GridView) findViewById(R.id.buttonLayout);
         gridview.setVisibility(View.INVISIBLE);
 
@@ -52,17 +53,20 @@ public class GuessActivity extends AppCompatActivity {
         imageView = (ImageView)findViewById(R.id.imageView);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         showImage();
-
-
     }
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         Intent intent = new Intent(this,MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
         finish();
+    }
+
+    public void resetButtonClicked(View view) {
+        guessTV = (TextView) findViewById(R.id.guessTextView);
+        guessTV.setText(R.string.defaultText);
+        initButtons();
     }
 
     private void initButtons() {
@@ -73,15 +77,25 @@ public class GuessActivity extends AppCompatActivity {
     }
 
     public void nextButtonClicked(View view) {
-        updateGame(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Are you sure?")
+                .setMessage("You will lose one live!")
+                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        updateGame();
+                    }
+                })
+                .setNegativeButton("NO", null)						//Do nothing on no
+                .show();
     }
 
-    private void loadNext(boolean correctAnswer) {
+    private void loadNext(boolean correctAnswer, boolean gameOver) {
         Movie movie = DataHandler.getInstance().getCurrentMovie();
         Intent i = new Intent(this, MovieInfoActivity.class);
         //i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         i.putExtra("movie", movie);
         i.putExtra("correct", correctAnswer);
+        i.putExtra("gameOver", gameOver);
         DataHandler.getInstance().removeCurrentMovie();
         //showImage();
         imageView.setVisibility(View.INVISIBLE);
@@ -200,13 +214,15 @@ public class GuessActivity extends AppCompatActivity {
                     else
                         textView.setText((String) textView.getText() + myButton.getText());
 
+                    myButton.setVisibility(View.INVISIBLE);
+
                     if (DataHandler.getInstance().checkGuessedMovie((String) textView.getText())) {
                         //textView.setText("nice guess!");
                         gridview.setVisibility(View.INVISIBLE);
-                        loadNext(true);
-                    } else if (textView.getText().length() > rndmTitle.length()) {
+                        loadNext(true, false);
+                    } else if (textView.getText().length() >= rndmTitle.length()) {
                         //textView.setText("nope, maybe next time!");
-                        updateGame(mContext);
+                        updateGame();
                     }
                 }
             });
@@ -232,29 +248,13 @@ public class GuessActivity extends AppCompatActivity {
         }
     }
 
-    private void updateGame(final Context mContext) {
+    private void updateGame() {
         gridview.setVisibility(View.INVISIBLE);
         if (DataHandler.getInstance().getLives() > 1) {
             DataHandler.getInstance().reduceLives();
-            loadNext(false);
+            loadNext(false, false);
         } else {
-            /*
-            AlertDialog alertDialog = new AlertDialog.Builder(mContext).create();
-            alertDialog.setTitle("Game Over!");
-            alertDialog.setMessage("You lost all of your lives and therefor the game!");
-            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                            Intent i = new Intent(mContext, MainActivity.class);
-                            startActivity(i);
-                        }
-                    });
-            alertDialog.show();*/
-            Intent intent = new Intent(this,GameOverActivity.class);
-            startActivity(intent);
-            finish();
+            loadNext(false, true);
         }
-        //updateHearts(mContext);
     }
 }
