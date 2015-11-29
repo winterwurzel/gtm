@@ -70,17 +70,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/imageView3"
-                    android:src="@drawable/minecraft_hart_24x" />
+                    android:src="@drawable/minecraft_hart_24x"
+                    android:onClick="toastLives"/>
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/imageView2"
-                    android:src="@drawable/minecraft_hart_24x" />
+                    android:src="@drawable/minecraft_hart_24x"
+                    android:onClick="toastLives" />
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/imageView1"
-                    android:src="@drawable/minecraft_hart_24x" />
+                    android:src="@drawable/minecraft_hart_24x"
+                    android:onClick="toastLives" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

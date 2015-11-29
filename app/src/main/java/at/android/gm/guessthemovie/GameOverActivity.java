@@ -30,6 +30,7 @@ public class GameOverActivity extends AppCompatActivity implements OnFetchDataCo
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(this,MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
         finish();
     }

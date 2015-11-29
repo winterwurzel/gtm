@@ -21,6 +21,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -273,5 +274,9 @@ public class GuessActivity extends AppCompatActivity {
                 loadNext(false, true);
             }
         }
+    }
+
+    public void toastLives(View view) {
+        Toast.makeText(this, "You have " + DataHandler.getInstance().getLives() + " lives left!", Toast.LENGTH_SHORT).show();
     }
 }
