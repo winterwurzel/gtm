@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements OnFetchDataComple
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        PreferenceManager.setDefaultValues(this, R.xml.application_preferences, false);
 
     }
 
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements OnFetchDataComple
     public void startButtonClicked(View view) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         String order = sharedPref.getString("list_preference_order", "");
+
         String options = "";
         if (order.equals("Popularity"))
             options = "&sort_by=popularity.desc";
@@ -82,6 +84,8 @@ public class MainActivity extends AppCompatActivity implements OnFetchDataComple
         String genre = sharedPref.getString("list_preference_genres", "");
         if (!genre.equals("Default"))
             options += "&with_genres=" + GenreMap.getInstance().getCONSTANT_MAP().get(genre);
+
+        Log.e("wut", options);
 
         DataHandler dh = DataHandler.getInstance();
         ProgressDialog dialog = new ProgressDialog(this);

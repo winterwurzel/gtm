@@ -7,14 +7,16 @@
             android:summary=""
             android:entries="@array/pref_result_order"
             android:entryValues="@array/pref_result_order"
-            android:dialogTitle="Get results by" />
+            android:dialogTitle="Get results by"
+            android:defaultValue="Default"/>
 
         <ListPreference android:key="list_preference_genres"
             android:title="Genre"
             android:summary=""
             android:entries="@array/pref_genres"
             android:entryValues="@array/pref_genres"
-            android:dialogTitle="Genre" />
+            android:dialogTitle="Genre"
+            android:defaultValue="Default"/>
 
         <CheckBoxPreference
             android:key="confirmation"

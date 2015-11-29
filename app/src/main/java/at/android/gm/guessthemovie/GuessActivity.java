@@ -48,7 +48,9 @@ public class GuessActivity extends AppCompatActivity {
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (DataHandler.getInstance().getMovieArraySize() == 0) {
-            updateGame(true);
+            Intent intent = new Intent(this,GameOverActivity.class);
+            startActivity(intent);
+            finish();
         }
         else {
             textView = (TextView) findViewById(R.id.guessTextView);
@@ -93,14 +95,14 @@ public class GuessActivity extends AppCompatActivity {
                     .setMessage("You will lose one live!")
                     .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            updateGame(false);
+                            updateGame();
                         }
                     })
                     .setNegativeButton("NO", null)                        //Do nothing on no
                     .show();
         }
         else
-            updateGame(false);
+            updateGame();
     }
 
     private void loadNext(boolean correctAnswer, boolean gameOver) {
@@ -236,7 +238,7 @@ public class GuessActivity extends AppCompatActivity {
                         loadNext(true, false);
                     } else if (textView.getText().length() >= rndmTitle.length()) {
                         //textView.setText("nope, maybe next time!");
-                        updateGame(false);
+                        updateGame();
                     }
                 }
             });
@@ -262,17 +264,13 @@ public class GuessActivity extends AppCompatActivity {
         }
     }
 
-    private void updateGame(boolean lastMovieInArray) {
+    private void updateGame() {
         gridview.setVisibility(View.INVISIBLE);
-        if(lastMovieInArray)
+        DataHandler.getInstance().reduceLives();
+        if (DataHandler.getInstance().getLives() > 0) {
+            loadNext(false, false);
+        } else {
             loadNext(false, true);
-        else {
-            DataHandler.getInstance().reduceLives();
-            if (DataHandler.getInstance().getLives() > 0) {
-                loadNext(false, false);
-            } else {
-                loadNext(false, true);
-            }
         }
     }
 
