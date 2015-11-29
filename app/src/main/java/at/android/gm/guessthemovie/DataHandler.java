@@ -95,7 +95,7 @@ public class DataHandler implements OnFetchDataCompleted{
                         String gids[] = mv.getString("genre_ids").substring(1, mv.getString("genre_ids").length()-1).split(",");
                         for (int j = 0; j < gids.length; j++) {
                             ids.add(Integer.parseInt(gids[j]));
-                            Log.e("id", mv.getString("title") + ", " + ids.get(j));
+                            //Log.e("id", mv.getString("title") + ", " + ids.get(j));
                         }
                         movieArray.add(new Movie(mv.getBoolean("adult"), mv.getString("backdrop_path"), ids, mv.getInt("id"), mv.getString("original_language"),
                                 mv.getString("original_title"), mv.getString("overview"), mv.getString("release_date"), mv.getString("poster_path"), mv.getDouble("popularity"),
@@ -135,7 +135,7 @@ public class DataHandler implements OnFetchDataCompleted{
     }
 
     public Movie getCurrentMovie() {
-        Log.e("log", "array-size: "  + movieArray.size());
+        //Log.e("log", "array-size: "  + movieArray.size());
         return movieArray.get(0);
     }
 

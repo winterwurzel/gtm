@@ -267,8 +267,8 @@ public class GuessActivity extends AppCompatActivity {
         if(lastMovieInArray)
             loadNext(false, true);
         else {
-            if (DataHandler.getInstance().getLives() > 1) {
-                DataHandler.getInstance().reduceLives();
+            DataHandler.getInstance().reduceLives();
+            if (DataHandler.getInstance().getLives() > 0) {
                 loadNext(false, false);
             } else {
                 loadNext(false, true);

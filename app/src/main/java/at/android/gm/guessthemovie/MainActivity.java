@@ -31,7 +31,13 @@ public class MainActivity extends AppCompatActivity implements OnFetchDataComple
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if (DataHandler.getInstance().getLives() == 0) {
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (DataHandler.getInstance().getLives() <= 0) {
             Button resumeButton = (Button) findViewById(R.id.buttonResume);
             resumeButton.setVisibility(View.INVISIBLE);
         }

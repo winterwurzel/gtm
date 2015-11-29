@@ -24,7 +24,7 @@ public class GameOverActivity extends AppCompatActivity implements OnFetchDataCo
 
         TextView gameOverText = (TextView) findViewById(R.id.gameOverText);
         int count = DataHandler.getInstance().getCount();
-        gameOverText.setText("Your Score: " + (count - 4 + DataHandler.getInstance().getLives()) + "/" + count);
+        gameOverText.setText("Your Score: " + (count - 3 + DataHandler.getInstance().getLives()) + "/" + count);
     }
 
     @Override
