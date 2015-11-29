@@ -113,7 +113,7 @@ public class DataHandler implements OnFetchDataCompleted{
 
     public String getNextBackdropUrl() {
         if (nextPageReady) {
-            Movie nextMovie = (Movie) this.movieArray.get(0);
+            Movie nextMovie = this.movieArray.get(0);
             return backdropBaseUrl + nextMovie.getBackdrop_path();
         } else
             return null;
@@ -131,15 +131,12 @@ public class DataHandler implements OnFetchDataCompleted{
 
     public boolean checkGuessedMovie(String textViewString) {
         String movieTitle = this.getCurrentMovie().getTitle();
-        if (movieTitle.equals(textViewString))
-            return true;
-        else
-            return false;
+        return movieTitle.equals(textViewString);
     }
 
     public Movie getCurrentMovie() {
         Log.e("log", "array-size: "  + movieArray.size());
-        return (Movie) movieArray.get(0);
+        return movieArray.get(0);
     }
 
     public void setDialogMessage(String msg) {
@@ -177,6 +174,10 @@ public class DataHandler implements OnFetchDataCompleted{
 
     public void reduceLives() {
         lives--;
+    }
+
+    public int getMovieArraySize() {
+        return movieArray.size();
     }
 
     public void getData(OnFetchDataCompleted ofdc, String options){

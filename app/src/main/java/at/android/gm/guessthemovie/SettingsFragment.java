@@ -1,5 +1,7 @@
 package at.android.gm.guessthemovie;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -7,6 +9,11 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.util.Log;
+import android.view.View;
+import android.widget.DatePicker;
+import android.widget.Toast;
+
+import java.util.Calendar;
 
 /**
  * Created by georg on 15-Nov-15.
@@ -14,6 +21,7 @@ import android.util.Log;
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
     private final String KEY_PREF_LIST_ORDER= "list_preference_order";
     private final String KEY_PREF_LIST_GENRES= "list_preference_genres";
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,6 +68,5 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             Preference listPrefGenres = findPreference(key);
             listPrefGenres.setSummary(sharedPref.getString(key, ""));
         }
-
     }
 }

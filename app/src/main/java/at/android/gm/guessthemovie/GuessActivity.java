@@ -3,11 +3,13 @@ package at.android.gm.guessthemovie;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -44,15 +46,20 @@ public class GuessActivity extends AppCompatActivity {
 
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        textView = (TextView) findViewById(R.id.guessTextView);
-        gridview = (GridView) findViewById(R.id.buttonLayout);
-        gridview.setVisibility(View.INVISIBLE);
+        if (DataHandler.getInstance().getMovieArraySize() == 0) {
+            updateGame(true);
+        }
+        else {
+            textView = (TextView) findViewById(R.id.guessTextView);
+            gridview = (GridView) findViewById(R.id.buttonLayout);
+            gridview.setVisibility(View.INVISIBLE);
 
-        updateHearts(this);
+            updateHearts(this);
 
-        imageView = (ImageView)findViewById(R.id.imageView);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        showImage();
+            imageView = (ImageView) findViewById(R.id.imageView);
+            progressBar = (ProgressBar) findViewById(R.id.progressBar);
+            showImage();
+        }
     }
 
     @Override
@@ -77,16 +84,22 @@ public class GuessActivity extends AppCompatActivity {
     }
 
     public void nextButtonClicked(View view) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Are you sure?")
-                .setMessage("You will lose one live!")
-                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        updateGame();
-                    }
-                })
-                .setNegativeButton("NO", null)						//Do nothing on no
-                .show();
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean conf = sharedPref.getBoolean("confirmation", false);
+        if (!conf) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Are you sure?")
+                    .setMessage("You will lose one live!")
+                    .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            updateGame(false);
+                        }
+                    })
+                    .setNegativeButton("NO", null)                        //Do nothing on no
+                    .show();
+        }
+        else
+            updateGame(false);
     }
 
     private void loadNext(boolean correctAnswer, boolean gameOver) {
@@ -222,7 +235,7 @@ public class GuessActivity extends AppCompatActivity {
                         loadNext(true, false);
                     } else if (textView.getText().length() >= rndmTitle.length()) {
                         //textView.setText("nope, maybe next time!");
-                        updateGame();
+                        updateGame(false);
                     }
                 }
             });
@@ -248,13 +261,17 @@ public class GuessActivity extends AppCompatActivity {
         }
     }
 
-    private void updateGame() {
+    private void updateGame(boolean lastMovieInArray) {
         gridview.setVisibility(View.INVISIBLE);
-        if (DataHandler.getInstance().getLives() > 1) {
-            DataHandler.getInstance().reduceLives();
-            loadNext(false, false);
-        } else {
+        if(lastMovieInArray)
             loadNext(false, true);
+        else {
+            if (DataHandler.getInstance().getLives() > 1) {
+                DataHandler.getInstance().reduceLives();
+                loadNext(false, false);
+            } else {
+                loadNext(false, true);
+            }
         }
     }
 }
