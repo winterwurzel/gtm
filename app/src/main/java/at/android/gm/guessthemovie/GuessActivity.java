@@ -37,6 +37,7 @@ public class GuessActivity extends AppCompatActivity {
     private GridView gridview;
     private TextView textView;
     private TextView guessTV;
+    private Button nextButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,9 @@ public class GuessActivity extends AppCompatActivity {
             textView = (TextView) findViewById(R.id.guessTextView);
             gridview = (GridView) findViewById(R.id.buttonLayout);
             gridview.setVisibility(View.INVISIBLE);
+
+            nextButton = (Button) findViewById(R.id.button2);
+            nextButton.setEnabled(false);
 
             updateHearts(this);
 
@@ -161,6 +165,7 @@ public class GuessActivity extends AppCompatActivity {
             progressBar.setVisibility(View.INVISIBLE);
             gridview.setVisibility(View.VISIBLE);
             textView.setText(getString(R.string.defaultText));
+            nextButton.setEnabled(true);
         }
     }
 

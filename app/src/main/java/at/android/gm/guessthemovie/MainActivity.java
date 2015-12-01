@@ -1,5 +1,6 @@
 package at.android.gm.guessthemovie;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -90,6 +91,10 @@ public class MainActivity extends AppCompatActivity implements OnFetchDataComple
         DataHandler dh = DataHandler.getInstance();
         ProgressDialog dialog = new ProgressDialog(this);
         dh.setDialog(dialog);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        dh.setAlertDialog(builder);
+
         dh.reInitMovieArray();
         dh.getData(this, options);
     }

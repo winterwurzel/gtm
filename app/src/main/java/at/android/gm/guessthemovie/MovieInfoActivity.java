@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ public class MovieInfoActivity extends AppCompatActivity {
     private TextView releaseTV;
     private Movie movie;
     private boolean gameOver;
+    private Button nextButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,8 @@ public class MovieInfoActivity extends AppCompatActivity {
         storyTV = (TextView) findViewById(R.id.storyTV);
         ratingTV = (TextView) findViewById(R.id.rating);
         releaseTV = (TextView) findViewById(R.id.release);
+        nextButton = (Button) findViewById(R.id.nextButton);
+        nextButton.setEnabled(false);
 
         Intent i = getIntent();
         movie = (Movie) i.getSerializableExtra("movie");
@@ -137,6 +141,7 @@ public class MovieInfoActivity extends AppCompatActivity {
             imageView.setImageBitmap(bitmap);
             // hide loading progress bar
             progressBar.setVisibility(View.INVISIBLE);
+            nextButton.setEnabled(true);
         }
     }
 

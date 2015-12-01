@@ -1,7 +1,11 @@
 package at.android.gm.guessthemovie;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -30,6 +34,7 @@ public class DataHandler implements OnFetchDataCompleted{
     private static DataHandler ourInstance = new DataHandler();
 
     private JSONArray results;
+    private android.app.AlertDialog.Builder builder;
     private List<Movie> movieArray;
     private ProgressDialog dialog;
     private String dataUrl = "http://api.themoviedb.org/3/discover/movie?api_key=d395777e95507dd42bcaab7bb4f94266";
@@ -74,11 +79,10 @@ public class DataHandler implements OnFetchDataCompleted{
                 }
                 bufferedReader.close();
                 json = new JSONObject(stringBuilder.toString());
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } finally {
+            } catch (Exception e) {
+                Log.e("Exception", e.toString());
+                //showNoConnectionDialog();
+            }finally {
                 if (urlConnection != null) urlConnection.disconnect();
             }
             return json;
@@ -104,10 +108,11 @@ public class DataHandler implements OnFetchDataCompleted{
                 }
                 long seed = System.nanoTime();
                 Collections.shuffle(movieArray, new Random(seed));
-            } catch (JSONException e) {
-                Log.e("JSON", "Error getting data.");
+                listener.OnFetchDataCompleted();
+            } catch (Exception e) {
+                Log.e("Exception", e.toString());
+                showNoConnectionDialog();
             }
-            listener.OnFetchDataCompleted();
         }
     }
 
@@ -156,6 +161,13 @@ public class DataHandler implements OnFetchDataCompleted{
         this.dialog = dialog;
     }
 
+    public void showNoConnectionDialog() {
+        builder.setTitle("no internet connection available")
+                .setMessage("the game needs a connection to the internet")
+                .setNeutralButton("OK", null)
+                .show();
+    }
+
     public void reInitMovieArray() {
         this.movieArray = new ArrayList();
         page = 1;
@@ -184,4 +196,7 @@ public class DataHandler implements OnFetchDataCompleted{
         new FetchDataTask(ofdc).execute(dataUrl + "&page=" + page + options);
     }
 
+    public void setAlertDialog(android.app.AlertDialog.Builder builder) {
+        this.builder = builder;
+    }
 }
