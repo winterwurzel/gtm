@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Game Over!"
+            android:id="@+id/gamOverTitle"
             android:textStyle="bold"
             android:textSize="48dp" />
 
@@ -38,6 +39,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="You lost all your lives!"
+            android:id="@+id/gameOverText1"
             android:textSize="30dp" />
         <TextView
             android:layout_width="wrap_content"

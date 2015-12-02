@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -39,6 +40,9 @@ public class GuessActivity extends AppCompatActivity {
     private TextView guessTV;
     private Button nextButton;
 
+//    private Typeface typefaceDefaultText = Typeface.createFromAsset(this.getAssets(),"fonts/RobotoCondensed-LightItalic.ttf");
+//    private Typeface typefaceTitleText = Typeface.createFromAsset(this.getAssets(),"fonts/RobotoCondensed-Bold.ttf");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +59,11 @@ public class GuessActivity extends AppCompatActivity {
         }
         else {
             textView = (TextView) findViewById(R.id.guessTextView);
+
+            //Change font
+            Typeface typefaceDefaultText = Typeface.createFromAsset(getAssets(),"fonts/RobotoCondensed-LightItalic.ttf");
+            textView.setTypeface(typefaceDefaultText);
+
             gridview = (GridView) findViewById(R.id.buttonLayout);
             gridview.setVisibility(View.INVISIBLE);
 
@@ -80,6 +89,11 @@ public class GuessActivity extends AppCompatActivity {
     public void resetButtonClicked(View view) {
         guessTV = (TextView) findViewById(R.id.guessTextView);
         guessTV.setText(R.string.defaultText);
+
+        //Change font
+        Typeface typefaceDefaultText = Typeface.createFromAsset(getAssets(),"fonts/RobotoCondensed-LightItalic.ttf");
+        guessTV.setTypeface(typefaceDefaultText);
+
         initButtons();
     }
 
@@ -217,7 +231,7 @@ public class GuessActivity extends AppCompatActivity {
             if (convertView == null) {
                 // if it's not recycled, initialize some attributes
                 myButton = new Button(mContext);
-                myButton.setLayoutParams(new GridView.LayoutParams(150, 150));
+                myButton.setLayoutParams(new GridView.LayoutParams(75, 75));
                 myButton.setTransformationMethod(null);
                 myButton.setPadding(8, 8, 8, 8);
             } else {
@@ -230,6 +244,10 @@ public class GuessActivity extends AppCompatActivity {
             myButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //Change font
+                    Typeface typefaceTitleText = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Medium.ttf");
+                    textView.setTypeface(typefaceTitleText);
+
                     if (textView.getText().equals(getString(R.string.defaultText)))
                         textView.setText(myButton.getText());
                     else

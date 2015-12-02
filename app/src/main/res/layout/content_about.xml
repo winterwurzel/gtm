@@ -20,8 +20,8 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Guess The Movie!"
-            android:textStyle="bold"
-            android:textSize="36dp" />
+            android:textSize="36dp"
+            android:id="@+id/about_title"/>
         <Space
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,7 +31,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Version: 0.1" />
+            android:text="Version: 0.1"
+            android:id="@+id/about_version"/>
         <Space
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,8 +43,8 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Authors:"
-            android:textStyle="bold"
-            android:textSize="30dp" />
+            android:textSize="30dp"
+            android:id="@+id/about_authors"/>
         <Space
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -53,12 +54,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Andrei Andrianov" />
+            android:text="Andrei Andrianov"
+            android:id="@+id/about_author1"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Georg Markowitsch" />
+            android:text="Georg Markowitsch"
+            android:id="@+id/about_author2"/>
         <Space
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -67,9 +70,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_gravity="center"
-            android:textAlignment="center"
+            android:id="@+id/about_thx"
             android:text="Thanks to themoviedb.org for providing the movie API" />
         <Space
             android:layout_width="match_parent"
