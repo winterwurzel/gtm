@@ -3,6 +3,7 @@ package at.android.gm.guessthemovie;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -30,6 +31,7 @@ public class MovieInfoActivity extends AppCompatActivity {
     private TextView storyTV;
     private TextView ratingTV;
     private TextView releaseTV;
+    private TextView correctTV;
     private Movie movie;
     private boolean gameOver;
     private Button nextButton;
@@ -42,13 +44,30 @@ public class MovieInfoActivity extends AppCompatActivity {
         //setSupportActionBar(toolbar);
 
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Typeface tempTypeface = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Medium.ttf");
+
+        correctTV = (TextView) findViewById(R.id.correctTV);
+        correctTV.setTypeface(tempTypeface);
 
         imageView = (ImageView)findViewById(R.id.imageView);
+
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
         textView = (TextView) findViewById(R.id.correctTitle);
+        tempTypeface = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Regular.ttf");
+        textView.setTypeface(tempTypeface);
+
         storyTV = (TextView) findViewById(R.id.storyTV);
+        tempTypeface = Typeface.createFromAsset(getAssets(),"fonts/Roboto-LightItalic.ttf");
+        storyTV.setTypeface(tempTypeface);
+
         ratingTV = (TextView) findViewById(R.id.rating);
+        tempTypeface = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Light.ttf");
+        ratingTV.setTypeface(tempTypeface);
+
         releaseTV = (TextView) findViewById(R.id.release);
+        releaseTV.setTypeface(tempTypeface);
+
         nextButton = (Button) findViewById(R.id.nextButton);
         nextButton.setEnabled(false);
 

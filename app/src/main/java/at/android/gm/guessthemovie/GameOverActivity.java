@@ -3,6 +3,7 @@ package at.android.gm.guessthemovie;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -22,7 +23,19 @@ public class GameOverActivity extends AppCompatActivity implements OnFetchDataCo
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
 
+        TextView gameOverTitle = (TextView) findViewById(R.id.gamOverTitle);
+        Typeface tempTypeface = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Medium.ttf");
+        gameOverTitle.setTypeface(tempTypeface);
+
+        TextView gameOverText1 = (TextView) findViewById(R.id.gameOverText1);
+        tempTypeface = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
+        gameOverText1.setTypeface(tempTypeface);
+
         TextView gameOverText = (TextView) findViewById(R.id.gameOverText);
+        tempTypeface = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Italic.ttf");
+        gameOverText.setTypeface(tempTypeface);
+
+
         int count = DataHandler.getInstance().getCount();
         gameOverText.setText("Your Score: " + (count - 3 + DataHandler.getInstance().getLives()) + "/" + count);
     }

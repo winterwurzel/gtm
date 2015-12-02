@@ -38,7 +38,7 @@
     <string name="nextButton">next</string>
     <string name="infoButton">more Info</string>
     <string name="contentDescription">backdrop_image</string>
-    <string name="defaultText">tap letters in the correct order</string>
+    <string name="defaultText">Tap letters in the correct order</string>
     <string name="wrongtText">Wrong Guess!</string>
     <string name="title_activity_wrong_guess">WrongGuessActivity</string>
     <string name="title_activity_about">AboutActivity</string>
