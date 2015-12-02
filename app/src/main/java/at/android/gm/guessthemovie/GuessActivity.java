@@ -231,7 +231,7 @@ public class GuessActivity extends AppCompatActivity {
             if (convertView == null) {
                 // if it's not recycled, initialize some attributes
                 myButton = new Button(mContext);
-                myButton.setLayoutParams(new GridView.LayoutParams(75, 75));
+                //myButton.setLayoutParams(new GridView.LayoutParams());
                 myButton.setTransformationMethod(null);
                 myButton.setPadding(8, 8, 8, 8);
             } else {
